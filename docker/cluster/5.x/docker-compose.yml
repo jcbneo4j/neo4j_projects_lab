@@ -1,0 +1,52 @@
+networks:
+  neo:
+
+services:
+  primary1:
+    hostname: primary1
+    container_name: primary1
+    image: neo4j:5.9-enterprise
+    env_file:
+      - ../../env/primary1.env
+      - ../../env/base_v5.env
+    networks:
+      - neo
+    ports:
+      - 8473:7473
+      - 8474:7474
+      - 8687:7687
+    volumes:
+      - $PWD/docker/cluster/5.x/primary1/data:/data
+      - $PWD/docker/cluster/5.x/primary1/logs:/logs
+  primary2:
+    hostname: primary2
+    container_name: primary2
+    image: neo4j:5.9-enterprise
+    env_file:
+      - ../../env/primary2.env
+      - ../../env/base_v5.env
+    networks:
+      - neo
+    ports:
+      - 9473:7473
+      - 9474:7474
+      - 9687:7687
+    volumes:
+      - $PWD/docker/cluster/5.x/primary2/data:/data
+      - $PWD/docker/cluster/5.x/primary2/logs:/logs
+  primary3:
+    hostname: primary3
+    container_name: primary3
+    image: neo4j:5.9-enterprise
+    env_file:
+      - ../../env/primary3.env
+      - ../../env/base_v5.env
+    networks:
+      - neo
+    ports:
+      - 6473:7473
+      - 6474:7474
+      - 6687:7687
+    volumes:
+      - $PWD/docker/cluster/5.x/primary3/data:/data
+      - $PWD/docker/cluster/5.x/primary3/logs:/logs

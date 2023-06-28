@@ -90,9 +90,9 @@ function neo_start_5.x_cluster() {
     echo ""
     echo "  - docker/cluster/5.x/docker-compose.yml"
     echo "  - docker/env/base_v5.env"
-    echo "  - vocker/env/primary1.env"
-    echo "  - vocker/env/primary2.env"
-    echo "  - vocker/env/primary3.env"
+    echo "  - docker/env/primary1.env"
+    echo "  - docker/env/primary2.env"
+    echo "  - docker/env/primary3.env"
     echo ""
     echo "Docs: https://neo4j.com/docs/operations-manual/current/clustering/setup/deploy/"
     echo ""
@@ -118,24 +118,34 @@ function neo_start_5.x_pri_sec_cluster() {
     echo ""
     echo "Project steps:"
     echo ""
-    echo "This project deploys neo4j 5.x with three primary nodes in a cluster. To make this happen, the following was done:"
+    echo "This project deploys neo4j 5.x with one primary and one secondary node in a cluster. Additionally, the GDS plugin"
+    echo "is installed on the secondary node and SSR (server side routing) is configured."
     echo ""
     echo "Items to study in this docker-compose project:"
     echo ""
-    echo "  - docker/cluster/5.x/docker-compose.yml"
-    echo "  - docker/env/base_v5.env"
+    echo "  - docker/cluster/5.x_primary_secondary/docker-compose.yml"
+    echo "  - docker/env/base_v5_pri_sec.env"
     echo "  - docker/env/primary1.env"
-    echo "  - docker/env/primary2.env"
-    echo "  - docker/env/primary3.env"
+    echo "  - docker/env/secondary1.env"
+    echo "  - docker/env/ssr_v5.env"
+    echo "  - docker/env/ssr_sec_v5.env"
     echo ""
-    echo "Docs: https://neo4j.com/docs/operations-manual/current/clustering/setup/deploy/"
+    echo "Docs: https://neo4j.com/docs/graph-data-science/current/production-deployment/neo4j-cluster/"
+    echo "Docs: https://neo4j.com/docs/operations-manual/current/clustering/setup/routing/#clustering-routing"
     echo ""
         docker-compose -f docker/cluster/5.x_primary_secondary/docker-compose.yml up -d
 	echo ""
 	echo "Project started in docker container..."
     echo "Open the Neo4j browser at --> http://localhost:8474"
 	echo ""
-   echo ""
+    echo "Process to bring secondary online with cluster and see SSR config:"
+    echo ""
+    echo "  - Upon intial startup, run a SHOW SERVERS. The secondary server will in the the state of 'Free' Run the following to enable it:"
+    echo "      enable server '<secondary server GUID>'"
+    echo "  - Next, create a database with the following topology: CREATE DATABASE test1 topology 1 primary 1 secondary"
+    echo "  - Then, change to the 'test1' database and run the following command to see the routing:"
+    echo "     call dbms.cluster.routing.getRoutingTable({}, 'test1')"
+    echo ""
    echo "*********************************************************************************************************"
    echo ""
 }
@@ -165,7 +175,7 @@ Neo4j Projects Menu
 2. Stop Neo4j 4.4 with certificates
 3. Start Neo4j 5.x cluster (3 primaries)
 4. Stop Neo4j 5.x cluster
-5. Start Neo4j 5.x cluster (1 primary 1 secondary)
+5. Start Neo4j 5.x cluster with GDS (1 primary 1 secondary)
 6. Stop Neo4j 5.x cluster
 7. Check for running projects...
 8. Exit

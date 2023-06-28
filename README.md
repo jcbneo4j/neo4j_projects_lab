@@ -16,9 +16,13 @@ Once Docker/docker-compose is running on your system, clone this project, cd to 
 Neo4j Projects Menu
 
 1. Start Neo4j 4.4 with certificates
-2. Check for running projects...
-3. Stop running projects...
-4. Exit
+2. Stop Neo4j 4.4 with certificates
+3. Start Neo4j 5.x cluster (3 primaries)
+4. Stop Neo4j 5.x cluster
+5. Start Neo4j 5.x cluster (1 primary 1 secondary)
+6. Stop Neo4j 5.x cluster
+7. Check for running projects...
+8. Exit
 'Choose an option:' 
 ```
 

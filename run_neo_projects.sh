@@ -136,7 +136,9 @@ function neo_start_5.x_pri_sec_cluster() {
         docker-compose -f docker/cluster/5.x_primary_secondary/docker-compose.yml up -d
 	echo ""
 	echo "Project started in docker container..."
-    echo "Open the Neo4j browser at --> http://localhost:8474"
+    echo "Open the Neo4j browser at (for primary) --> http://localhost:8474"
+    echo "Open the Neo4j browser at (for secondary/gds) --> http://localhost:9474/browser/"
+    
 	echo ""
     echo "Process to bring secondary online with cluster and see SSR config:"
     echo ""
@@ -145,6 +147,8 @@ function neo_start_5.x_pri_sec_cluster() {
     echo "  - Next, create a database with the following topology: CREATE DATABASE test1 topology 1 primary 1 secondary"
     echo "  - Then, change to the 'test1' database and run the following command to see the routing:"
     echo "     call dbms.cluster.routing.getRoutingTable({}, 'test1')"
+    echo "  - If logged into the GDS secondary, use localhost:9687 for the bolt URL in the Neo4j Browser"
+    echo "  - Once logged in, validate the GDS plugin install by running 'RETURN gds.version()'"
     echo ""
    echo "*********************************************************************************************************"
    echo ""
